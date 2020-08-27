@@ -334,6 +334,14 @@ def project_from_files(
     """return a Project from a list of files or modules"""
     # build the project representation
     astroid_manager = manager.AstroidManager()
+
+    # Register transform for Traits
+    astroid_manager.register_transform(
+        astroid.Call,
+        utils.strip_trait,
+        utils.is_trait,
+    )
+
     project = Project(project_name)
     for something in files:
         if not os.path.exists(something):

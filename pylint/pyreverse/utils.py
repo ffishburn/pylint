@@ -19,10 +19,13 @@ import os
 import re
 import sys
 
+from astroid import Call, Name
+
 ########### pyreverse option utils ##############################
 
 
 RCFILE = ".pyreverserc"
+TRAIT_NAMES = ('Instance', 'List', 'Property')
 
 
 def get_default_options():
@@ -97,6 +100,24 @@ def is_interface(node):
 def is_exception(node):
     # bw compat
     return node.type == "exception"
+
+
+def is_trait(node):
+    if isinstance(node.func, Name) and node.func.name in TRAIT_NAMES:
+        return True
+    return False
+
+
+def strip_trait(node):
+    if node.args:
+        obj = node.args[0]
+        if isinstance(obj, Call):
+            node.func = obj.func
+            node.args = obj.args
+        else:
+            node.func = obj
+            node.args = node.args[1:]
+    return node
 
 
 # Helpers #####################################################################
