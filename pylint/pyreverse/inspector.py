@@ -336,11 +336,7 @@ def project_from_files(
     astroid_manager = manager.AstroidManager()
 
     # Register transform for Traits
-    astroid_manager.register_transform(
-        astroid.Call,
-        utils.strip_trait,
-        utils.is_trait,
-    )
+    astroid_manager.register_transform(astroid.Call, utils.strip_trait, utils.is_trait)
 
     project = Project(project_name)
     for something in files:

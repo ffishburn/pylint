@@ -25,7 +25,7 @@ from astroid import Call, Name
 
 
 RCFILE = ".pyreverserc"
-TRAIT_NAMES = ('Instance', 'List', 'Property')
+TRAIT_NAMES = ("Instance", "List", "Property")
 
 
 def get_default_options():
